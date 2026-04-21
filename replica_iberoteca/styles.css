@@ -1,0 +1,695 @@
+/* Modern Design System for Iberoteca */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap");
+
+:root {
+  --primary-color: #5a67d8;
+  --primary-hover: #434190;
+  --primary-gradient: linear-gradient(135deg, #5a67d8 0%, #434190 100%);
+  --accent-color: #ffd700;
+  --text-main: #1f2937;
+  --text-muted: #4b5563;
+  --bg-light: #f3f4f6;
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(209, 213, 219, 0.3);
+  --card-shadow:
+    0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  color: var(--text-main);
+  /* Fondo moderno: degradado sutil que aporta profundidad sin cansar la vista */
+  background: linear-gradient(135deg, #f0f4f8 0%, #ffffff 50%, #f8fafc 100%);
+  background-attachment: fixed;
+  line-height: 1.6;
+}
+
+/* Texture overlay for a more premium feel */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Glassmorphism Components */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 1.5rem;
+  box-shadow: var(--card-shadow);
+  transition: var(--transition);
+}
+
+.glass-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+/* Book Detail Header */
+.product-title {
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  color: #111827;
+  margin-bottom: 1rem;
+}
+
+.badge-modern {
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  background: #e0e7ff;
+  color: #4338ca;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Information Grid */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.info-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.info-value {
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+/* Expandable Description */
+.description-container {
+  position: relative;
+  max-height: 150px;
+  overflow: hidden;
+  transition: max-height 0.5s ease-in-out;
+  border: none !important; /* Elimina líneas de marco no deseadas */
+  box-shadow: none !important;
+}
+
+.description-container.expanded {
+  max-height: 2000px;
+}
+
+.description-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0), #f8fafc); /* Coincide con el fondo del body */
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.description-container.expanded .description-overlay {
+  opacity: 0;
+}
+
+.read-more-btn {
+  display: inline-flex;
+  align-items: center;
+  color: var(--primary-color);
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: var(--transition);
+}
+
+.read-more-btn:hover {
+  color: var(--primary-hover);
+  text-decoration: underline;
+}
+
+/* Responsive Brand Header */
+
+.tp_preheader {
+  background: var(--primary-gradient) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tp_header {
+  background: var(--primary-gradient) !important;
+  /* Las siguientes 4 líneas hacen la magia del anclaje */
+  position: sticky;
+  top: 0;
+  z-index: 1050; /* Mantiene la barra por encima del texto, pero por debajo del libro en pantalla completa */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); /* Sombra elegante para separar la barra del resto */
+}
+
+/* Fix "holes" in header (white backgrounds) */
+.tp_preheader .card,
+.tp_header .card,
+.tp_preheader .bg-beta,
+.tp_header .bg-beta {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+}
+
+/* Text visibility in header - refined */
+.tp_preheader *,
+.tp_header *:not(.dropdown-menu *) {
+  color: white !important;
+}
+
+/* Fix dropdown menu items (Reset to dark on light background) */
+.tp_header .dropdown-menu *,
+.tp_header .dropdown-menu a,
+.tp_header .dropdown-menu .dropdown-item,
+.tp_header .dropdown-menu .dropdown-header {
+  color: #333 !important;
+}
+
+.tp_header .dropdown-menu .dropdown-item:hover {
+  background-color: var(--primary-color) !important;
+  color: white !important;
+}
+
+/* Search category text visibility and button style */
+.d_search_categ_dropdown .btn {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  transition: var(--transition);
+}
+
+.d_search_categ_dropdown .btn:hover {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.d_search_categ_dropdown .dr_active_text,
+.d_search_categ_dropdown .fa-bars {
+  color: white !important;
+}
+
+/* Dropdown list items within search */
+.d_search_categ_dropdown .dropdown-menu a {
+  color: #333 !important;
+}
+
+.navbar-brand img {
+  filter: brightness(0) invert(1);
+  max-height: 50px;
+}
+
+/* Contenedor principal con perspectiva 3D */
+.product-image-wrapper {
+  position: relative;
+  border-radius: 0.5rem;
+  background: transparent;
+  padding: 0;
+  max-width: 100%;
+  aspect-ratio: 2/3;
+  perspective: 1500px; /* Profundidad del efecto 3D */
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.product-image-wrapper:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(90, 103, 216, 0.3);
+}
+
+/* El libro en sí */
+.book-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+/* Movimiento del contenedor al abrirse para centrar la vista */
+.book-container.is-open {
+  transform: translateX(30%);
+}
+
+.book-cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  transform-origin: left center; /* Eje de rotación a la izquierda (el lomo) */
+  transition: transform 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+  /* Eliminamos backface-visibility y overflow para permitir el 3D */
+  border-radius: 0.5rem;
+  background: transparent;
+  transform-style: preserve-3d;
+}
+
+.book-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  backface-visibility: hidden; /* Oculta SOLO la imagen al girar */
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+
+/* Reducimos un poco el ángulo de la tapa para que no se extienda demasiado fuera de la pantalla */
+.book-container.is-open .book-cover {
+  transform: rotateY(-100deg);
+  box-shadow: 15px 15px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* El interior (las páginas y el lector) */
+.book-inside {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background: #fdfbf7; /* Color tipo papel */
+  border-radius: 0 0.5rem 0.5rem 0;
+  box-shadow:
+    inset 10px 0 20px rgba(0, 0, 0, 0.05),
+    -2px 0 5px rgba(0, 0, 0, 0.1);
+  padding: 10px; /* Margen para que parezcan páginas */
+}
+
+.book-inside iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 2px;
+  background: white;
+}
+
+/* Busca esto en tu código y modifícalo así: */
+.product-image-wrapper img,
+.product_detail_img {
+  max-width: 100%;
+  max-height: 100%;
+  width: 100% !important; /* Añadir 100% */
+  height: 100% !important; /* Añadir 100% */
+  object-fit: cover !important; /* Cambiar de contain a cover */
+  border-radius: 0.5rem;
+  display: block;
+}
+
+/* Increased spacing between cover and details */
+#product_details {
+  padding-left: 1.5rem !important;
+}
+
+/* Video Section Styles - Compact version for sidebar */
+.video-section {
+  padding: 1.5rem 0;
+  margin: 1rem 0;
+}
+
+.video-section h6 {
+  color: var(--primary-color);
+  font-weight: bold;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+}
+
+.video-container {
+  width: 100%;
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+  height: 0;
+  overflow: hidden;
+  border-radius: 1rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  background: #000;
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+@media (max-width: 991.98px) {
+  #product_details {
+    padding-left: 15px !important;
+    margin-top: 2rem;
+  }
+}
+
+
+.product-image-wrapper:hover {
+  transform: perspective(1000px) rotateY(-5deg) scale(1.05);
+  box-shadow: 10px 30px 50px rgba(90, 103, 216, 0.4);
+}
+
+/* Fondo oscuro difuminado para el modo lectura */
+.book-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(15, 23, 42, 0.4); /* Un tono más claro y sutil */
+  backdrop-filter: blur(10px); /* El efecto difuminado mágico */
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 9998;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.book-overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* Modificador cuando el libro se hace gigante */
+.product-image-wrapper.is-fullscreen {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 85vw !important;
+  height: 90vh !important;
+  max-width: 1200px;
+  transform: translate(-50%, -50%) !important;
+  z-index: 9999;
+  margin: 0 !important;
+  transition: all 0.5s ease;
+  cursor: default; /* Quita el cursor de mano al leer */
+}
+
+/* Ajuste para centrar el conjunto completo en pantalla grande */
+.product-image-wrapper.is-fullscreen .book-container {
+  width: 85%; /* ¡Área de lectura mucho más ancha! */
+  margin: 0 auto;
+}
+
+.product-image-wrapper.is-fullscreen .book-container.is-open {
+  transform: translateX(
+    0
+  ); /* Lo centramos en pantalla (se desplaza a la izquierda) */
+}
+
+/* Optimización para teléfonos móviles */
+@media (max-width: 768px) {
+  .product-image-wrapper.is-fullscreen {
+    width: 95vw !important;
+    height: 85vh !important;
+  }
+  .product-image-wrapper.is-fullscreen .book-container {
+    width: 100%; /* Recupera el 100% del ancho en móvil */
+  }
+  .product-image-wrapper.is-fullscreen .book-container.is-open {
+    transform: translateX(0);
+  }
+  .product-image-wrapper.is-fullscreen .book-container.is-open .book-cover {
+    transform: rotateY(-90deg);
+    opacity: 0;
+  }
+}
+
+/* Evitar que el libro "tiemble" o flote si pasas el ratón mientras lees */
+.product-image-wrapper.is-fullscreen:hover {
+  transform: translate(-50%, -50%) !important;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+}
+/* Estilos para los metadatos tipo tag (píldoras) */
+.metadata-tags {
+  gap: 0.6rem; /* Espaciado uniforme entre los tags */
+}
+
+.meta-tag {
+  display: inline-flex;
+  align-items: center;
+  background: #ffffff; /* Fondo blanco para que resalte sutilmente */
+  border: 1px solid var(--glass-border);
+  border-radius: 9999px; /* Forma de píldora redondeada */
+  padding: 0.4rem 0.9rem;
+  font-size: 0.8rem;
+  color: var(--text-main);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+  transition: var(--transition);
+}
+
+.meta-tag:hover {
+  background: var(--bg-light);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.meta-tag-label {
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-right: 0.4rem;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+}
+
+.meta-tag-value {
+  font-weight: 500;
+}
+
+.meta-icon {
+  color: var(--primary-color);
+  margin-right: 0.4rem;
+  font-size: 0.85rem;
+}
+
+/* Optimizaciones para la grilla de libros en el catálogo */
+.s_card_style_6.glass-card .d_img_block {
+  border-radius: 1.5rem 1.5rem 0 0;
+  overflow: hidden;
+}
+
+.s_card_style_6.glass-card .d-product-img {
+  transition: var(--transition);
+}
+
+.s_card_style_6.glass-card:hover .d-product-img {
+  transform: scale(1.05);
+}
+
+.s_card_style_6.glass-card .card-title a {
+  color: var(--text-main);
+  text-decoration: none;
+  font-weight: 700;
+  transition: var(--transition);
+}
+
+.s_card_style_6.glass-card .card-title a:hover {
+  color: var(--primary-color);
+}
+
+/* Preparar la tapa para el efecto 3D */
+.book-cover {
+  transform-style: preserve-3d;
+}
+
+/* Diseño para el reverso (interior) de la tapa abierta */
+.book-cover::after {
+  content: "\2715"; /* Texto + ícono de cerrar */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Un fondo oscuro que simula el interior de una tapa dura */
+  background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+  color: rgba(255, 255, 255, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Inter", sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  /* Lo rotamos 180deg para que mire hacia adelante cuando la tapa se abra */
+  transform: rotateY(180deg);
+  backface-visibility: hidden;
+  /* Sombra interna para simular la hendidura del lomo del libro */
+  box-shadow: inset -10px 0 20px rgba(0, 0, 0, 0.5);
+  transition: all 0.3s ease;
+  border-radius: 0.5rem;
+  z-index: 1;
+}
+
+/* Efecto hover interactivo para el botón de cerrar */
+.book-container.is-open .book-cover:hover::after {
+  color: var(
+    --accent-color
+  ); /* Resalta con tu color amarillo al pasar el mouse */
+  background: linear-gradient(135deg, #374151 0%, #1f2937 100%);
+  cursor: pointer;
+}
+
+/* Botón moderno para el video - Versión llamativa */
+.btn-video {
+  display: inline-flex;
+  align-items: center;
+  background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
+  color: #ffffff !important;
+  border: none;
+  padding: 0.8rem 1.8rem;
+  border-radius: 9999px;
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  font-size: 1.05rem;
+  transition: var(--transition);
+  cursor: pointer;
+  box-shadow: 0 10px 20px -5px rgba(255, 75, 43, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn-video:hover {
+  transform: translateY(-4px) scale(1.06);
+  box-shadow: 0 15px 25px -5px rgba(255, 75, 43, 0.5);
+  background: linear-gradient(135deg, #ff4b2b 0%, #ff416c 100%);
+  color: #ffffff !important;
+}
+
+.btn-video:active {
+  transform: translateY(-1px) scale(0.98);
+}
+
+.btn-video i {
+  font-size: 1.4rem;
+  margin-right: 0.6rem;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+/* Botón de Audio (TTS) */
+.btn-audio {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  color: var(--primary-color);
+  border: 1px solid var(--glass-border);
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  margin-left: 0.8rem;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.btn-audio:hover {
+  background: var(--primary-color);
+  color: white;
+  transform: scale(1.1) rotate(5deg);
+  box-shadow: 0 10px 15px -3px rgba(90, 103, 216, 0.3);
+}
+
+.btn-audio:active {
+  transform: scale(0.95);
+}
+
+.btn-audio.is-playing {
+  background: #ef4444;
+  color: white;
+  animation: pulse-red 2s infinite;
+}
+
+@keyframes pulse-red {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+  70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+
+/* Espaciado extra antes del footer */
+#product_detail {
+    padding-bottom: 10px !important; /* Espacio reducido para que los comentarios queden más cerca de Compartir */
+}
+
+/* Espacio adicional en la zona de recomendaciones (vistos recientemente) */
+.s_wsale_products_recently_viewed {
+    margin-bottom: 60px !important;
+}
+
+/* Separación respecto a la franja de VARIEDAD, SIN RESTRICCIONES, etc. */
+.tp-delivery-info {
+    margin-top: 40px;
+    border-top: 1px solid rgba(0,0,0,0.05); /* Opcional: una línea muy sutil para dividir */
+    padding-top: 50px !important;
+}
+
+/* =========================================
+   Sección de Comentarios (Adaptación Glass)
+   ========================================= */
+
+.comments-card {
+  /* Sobrescribe el fondo blanco del ejemplo por la tarjeta de cristal */
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 1.5rem;
+}
+
+.input-comment-box {
+  background-color: rgba(255, 255, 255, 0.6); /* Fondo sutil para el área de input */
+  border: 1px solid var(--glass-border);
+}
+
+.input-comment-box .form-control {
+  background-color: #ffffff;
+}
+
+.input-comment-box .form-control:focus {
+  color: var(--text-main);
+  background-color: #ffffff;
+  border-color: var(--primary-color);
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(90, 103, 216, 0.25);
+}
+
+.comment-text {
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.badge-primary-custom {
+  background: var(--primary-gradient);
+  color: #ffffff;
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.action-icons span {
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.action-icons span:hover {
+  color: var(--primary-color) !important;
+}
+
+.action-icons i {
+  font-size: 1rem;
+}
